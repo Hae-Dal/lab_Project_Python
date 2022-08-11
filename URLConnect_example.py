@@ -1,15 +1,11 @@
-import pymysql
+import pymysql 
 from flask import Flask
 from flask import request
 from flask import jsonify
 from flask import redirect, url_for, send_from_directory, render_template
 import json
 
-conn = pymysql(host='localhost', 
-                user = 'host',
-                password = '05020130lee@',
-                db = 'Boards',
-                charset = 'utf8')
+conn = pymysql(host='localhost', user = 'host', password = '05020130lee@', db = 'Boards', charset = 'utf8')
 
 curs = conn.cursor()
 
@@ -30,6 +26,6 @@ def postJsonHandler():
     rows = curs.fetchall()
     print(rows)
     data = {'id' : 'yebin'}
-    return json.dumps(data)
+    return json.dumps(rows)
 
-app.run(host = "192.168.0.11", port = 443)
+app.run(host = "0.0.0.0", port = 8888)
