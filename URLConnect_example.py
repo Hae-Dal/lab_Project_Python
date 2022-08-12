@@ -1,31 +1,11 @@
-import pymysql 
-from flask import Flask
-from flask import request
-from flask import jsonify
-from flask import redirect, url_for, send_from_directory, render_template
-import json
-
-conn = pymysql(host='localhost', user = 'host', password = '05020130lee@', db = 'Boards', charset = 'utf8')
-
-curs = conn.cursor()
-
-if conn.open:
-    print('connected')
+from flask import Flask, escape, request
 
 app = Flask(__name__)
 
-@app.route('/test', methods =['POST'])
-def postJsonHandler():
-    print(request.is_json)
-    content =request.get_json()
-    print (content)
-    id = content['id']
-    print ("#####id:",id)
-    sql = "select * from posttbl"
-    curs.execute(sql)
-    rows = curs.fetchall()
-    print(rows)
-    data = {'id' : 'yebin'}
-    return json.dumps(rows)
+@app.route('/')
+def hello():
+    name = request.args.get("name", "World")
+    return f'Hello, {escape(name)}!'
 
-app.run(host = "0.0.0.0", port = 8888)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
