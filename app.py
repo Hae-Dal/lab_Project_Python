@@ -2,7 +2,6 @@ import pymysql
 from flask import Flask
 import datetime, json
 
-
 conn = pymysql.connect(host='localhost', user='root', password='05020130lee@', db='Boards', charset='utf8') # mysql 연결
 curs = conn.cursor() # sql문을 입력할 cursor 생성
 
@@ -25,7 +24,7 @@ try:
 
     def json_default(value): # DB 내 데이터 형식 중 JSON으로 변환 불가능한 형식이 있을때, STRING으로 바꿔줌
         if isinstance(value, datetime.date):
-            return value.strftime('%Y-%m-%d') # strftime : 날짜, 시간을 string으로 변환
+            return value.strftime('%Y-%m-%d') # strftime : 날짜, 시간을 string으로 변환ㅊ
         raise TypeError('not JSON serializable')
 
 finally:
