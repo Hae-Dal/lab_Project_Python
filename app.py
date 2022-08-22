@@ -1,8 +1,9 @@
 #vim app.py
 
-from flask  import Flask, json
+from inspect import _void
+from flask  import Flask, json, request
 import datetime
-from models import Stores
+from models import Stores, sendData
 
 app = Flask(__name__)
 
@@ -17,7 +18,10 @@ def json_default(value): # DB 내 데이터 형식 중 JSON으로 변환 불가�
         return value.strftime('%Y-%m-%d') # strftime : 날짜, 시간을 string으로 변환
     raise TypeError('not JSON serializable')
 
-
-
-
-    
+@app.route('/sendserver', methods=['POST','GET'])
+def toDB(): # DB에 저장
+    id = request.json['userID'] # json형태의 키값중 'userID'의 값을 리턴
+    password = request.json['userPassword'] # json형태의 키값중 'userPassword'의 값을 리턴
+    name = request.json['userName'] # json형태의 키값중 'userName'의 값을 리턴
+    sendData.sendtodb(id,password,name) # models.py의 sendData클래스 내의 sendtodb함수 실행
+    return "Success"
