@@ -7,7 +7,11 @@ from models import Stores, sendData
 
 app = Flask(__name__)
 
-@app.route('/dbtoweb', methods=['POST','GET'])
+@app.route("/", methods = ['POST'])
+def helloWorld():
+    return "helloWorld"
+
+@app.route('/dbtoweb', methods=['POST'])
 # route() : 외부 웹브라우져에서 웹서버로 접근 시 해당 주소로 입력을 하게 되면 특정 함수가 실행되게 도와줌('/test': /test 주소에 접근하면 아래 함수 실행)
 def dbToWeb(): # DB에서 웹으로 데이터를 보내기위한 함수
     data = Stores.get_all() # models.py의 Stores클래스 내의 get_all함수 실행
