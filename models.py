@@ -16,20 +16,18 @@ class Stores():
     def post_count():                                               # DB의 가장 마지막 postnum을 가져오는 함수
         conn = dbcon()
         curdic = conn.cursor(pymysql.cursors.DictCursor)
-        sql = "SELECT postnum FROM Post order by postnum DESC limit 10000"
+        sql = "SELECT postnum FROM Post order by postnum DESC limit 1"
         curdic.execute(sql)
         postnum = curdic.fetchone()
-        print(postnum)
         dbclose(conn)
-        return postnum
+        return postnum['postnum']
 
-    def get_likenum(postnum):
+    def get_likenum(postnum):                                       # likenum 숫자 가져오는 함수
         conn = dbcon()
         curdic = conn.cursor(pymysql.cursors.DictCursor)
         sql = "SELECT likenum FROM Post WHERE postnum=%s"
         curdic.execute(sql, (postnum))
-        likenum = curdic.fetchone()
-        print(postnum, ", ", likenum)
+        likenum = curdic.fetchone()                                 # fetchone : 딕셔너리 형태로 fetch
         dbclose(conn)
         return likenum['likenum']
 
@@ -50,7 +48,6 @@ class sendData():
         likenum = Stores.get_likenum(postnum) + 1             
         conn = dbcon()
         curdic = conn.cursor()
-        print(likenum)
         sql = "UPDATE Post SET likenum=%s WHERE postnum=%s"
         curdic.execute(sql, (likenum,postnum))
         conn.commit()
