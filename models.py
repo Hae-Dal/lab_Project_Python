@@ -31,6 +31,7 @@ class Stores():
         dbclose(conn)
         return likenum['likenum']
 
+
 class sendData():
     def sendtodb(name,title,contents,time):
         count = int(Stores.post_count()) + 1
